@@ -5,14 +5,13 @@ power_data <- read.table(filename, header = TRUE, sep = ";", na.strings = "?", c
 
 filtered_data <- subset(power_data, Date == "1/2/2007" | Date == "2/2/2007")
 
-png(filename = "plot1.png", width = 480, height = 480, bg = "white")
+png(filename = "plot2.png", width = 480, height = 480, bg = "white")
 
 filtered_data$Global_active_power <- sapply(filtered_data$Global_active_power, as.numeric)
 
-hist(filtered_data$Global_active_power,
-     xlab = "Global Active Power (kilowatts)",
-     main = "Global Active Power", 
-     col = "red")
+filtered_data$Date_Time <- strptime(paste(filtered_data$Date, filtered_data$Time), format="%d/%m/%Y %H:%M:%S")
 
+plot(filtered_data$Date_Time,filtered_data$Global_active_power,
+     ylab = "Global Active Power (kilowatts)")
+	 
 dev.off()
-
